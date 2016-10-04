@@ -5,9 +5,12 @@ from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.utils import timezone
+from django.utils.http import urlencode
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 from perma.models import WeekStats, MinuteStats
-from perma.utils import json_serial, send_user_email
+from perma.utils import json_serial, send_user_email, get_lat_long
+
 
 logger = logging.getLogger(__name__)
 
@@ -118,3 +121,27 @@ def bookmarklet_create(request):
 #         raise Http404
 #
 #     return HttpResponse(thumbnail_contents.read(), content_type='image/png')
+
+@login_required
+@user_passes_test(lambda user: user.is_staff or user.is_registrar_user())
+def coordinates_from_address(request):
+    """ Return {lat:#, lng:#, success: True} of any address or {success: False} if lookup fails."""
+    address = urlencode({"address": request.GET.get('address', '')})
+    if address:
+        print address
+        try:
+            thing = get_lat_long(address)
+            print thing
+            (lat, lng) = get_lat_long(address)
+            return HttpResponse(
+                json.dumps({'lat': lat, 'lng': lng, 'success': True}),
+                content_type = 'application/javascript; charset=utf8',
+                status=200
+            )
+        except TypeError:
+            pass
+    return HttpResponse(
+                json.dumps({'success': False}),
+                content_type = 'application/javascript; charset=utf8',
+                status=200
+            )

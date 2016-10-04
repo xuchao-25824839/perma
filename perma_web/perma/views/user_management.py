@@ -44,7 +44,7 @@ from perma.forms import (
     UserAddAdminForm)
 from perma.models import Registrar, LinkUser, Organization, Link, Capture, CaptureJob
 from perma.utils import apply_search_query, apply_pagination, apply_sort_order, send_admin_email, \
-    send_user_email, send_user_template_email, get_form_data, ratelimit_ip_key
+    send_user_email, send_user_template_email, get_form_data, ratelimit_ip_key, get_lat_long
 
 logger = logging.getLogger(__name__)
 valid_member_sorts = ['last_name', '-last_name', 'date_joined', '-date_joined', 'last_login', '-last_login', 'link_count', '-link_count']
@@ -251,7 +251,7 @@ def manage_single_registrar(request, registrar_id):
     return render(request, 'user_management/manage_single_registrar.html', {
         'target_registrar': target_registrar,
         'this_page': 'users_registrars',
-        'form': form,
+        'form': form
     })
 
 
@@ -1204,6 +1204,15 @@ def libraries(request):
         if registrar_form.is_valid():
             new_registrar = registrar_form.save()
             email_registrar_request(request, new_registrar)
+            address = registrar_form.cleaned_data.get('address', '')
+            if address:
+                try:
+                    (lat, lng) = get_lat_long(address)
+                    new_registrar.latitude = lat
+                    new_registrar.longitude = lng
+                    new_registrar.save(update_fields=["latitude", "longitude"])
+                except TypeError:
+                    pass
 
             if not request.user.is_authenticated():
                 if user_form.is_valid():

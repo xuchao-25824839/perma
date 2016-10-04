@@ -8,6 +8,7 @@ import tempdir
 from datetime import datetime
 import logging
 from netaddr import IPAddress, IPNetwork
+import requests
 
 from django.core.mail import EmailMessage, send_mail
 from django.core.paginator import Paginator
@@ -271,3 +272,36 @@ def url_in_allowed_ip_range(url):
     except socket.gaierror:
         return False
     return ip_in_allowed_ip_range(ip)
+
+### addresses ###
+
+def get_lat_long(address):
+    r = requests.get('https://maps.googleapis.com/maps/api/geocode/json?address={}&key={}'.format(address, settings.GEOCODING_KEY))
+    if r.status_code == 200:
+        rj = r.json()
+        status = rj['status']
+        if status == 'OK':
+            results = rj['results']
+            if len(results) == 1:
+                (lat, lng) = (results[0]['geometry']['location']['lat'], results[0]['geometry']['location']['lng'])
+                return (lat, lng)
+            else:
+                # Ambiguous address
+                pass
+        elif status == 'ZERO_RESULTS':
+            # Ambiguous address
+            pass
+        elif status == 'REQUEST_DENIED':
+            # We should probably let ourselves know, without failing
+            pass
+        elif status == 'OVER_QUERY_LIMIT':
+            # We should probably let ourselves know, without failing
+            pass
+        else:
+            # We should probably let ourselves know, without failing
+            return "Weird problem from Google."
+    else:
+        # We should probably let ourselves know, without failing
+        return "Problem at http request level."
+
+

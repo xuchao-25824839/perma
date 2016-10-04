@@ -27,11 +27,11 @@ class LinkInline(admin.TabularInline):
 
 class RegistrarAdmin(SimpleHistoryAdmin):
     search_fields = ['name', 'email', 'website']
-    list_display = ['name', 'status', 'email', 'website', 'show_partner_status', 'partner_display_name', 'logo', 'latitude', 'longitude', 'registrar_users', 'last_active', 'orgs_count', 'link_count', 'tag_list']
-    list_editable = ['show_partner_status', 'partner_display_name', 'latitude', 'longitude', 'status']
+    list_display = ['name', 'status', 'email', 'website', 'show_partner_status', 'partner_display_name', 'logo', 'address', 'latitude', 'longitude', 'registrar_users', 'last_active', 'orgs_count', 'link_count', 'tag_list']
+    list_editable = ['show_partner_status', 'partner_display_name', 'address','latitude', 'longitude', 'status']
     fieldsets = (
         (None, {'fields': ('name', 'email', 'website', 'status', 'tags')}),
-        ("Partner Display", {'fields': ('show_partner_status', 'partner_display_name', 'logo', 'latitude', 'longitude')}),
+        ("Partner Display", {'fields': ('show_partner_status', 'partner_display_name', 'logo', 'address', 'latitude', 'longitude')}),
     )
     inlines = [
         new_class("OrganizationInline", InlineEditLinkMixin, admin.TabularInline, model=Organization,
@@ -65,7 +65,7 @@ class OrganizationAdmin(SimpleHistoryAdmin):
     search_fields = ['name']
     list_display = ['name', 'registrar', 'org_users', 'last_active', 'first_active', 'user_deleted', 'link_count',]
     list_filter = ['registrar', 'user_deleted']
-    
+
     # statistics
     def get_queryset(self, request):
         qs = super(OrganizationAdmin, self).get_queryset(request).select_related('registrar').prefetch_related('users')

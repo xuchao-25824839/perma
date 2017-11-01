@@ -6,6 +6,7 @@
 #
 -e git+git://github.com/rebeccacremona/createsend-python.git@7cd8be21f89fa7bb61dafb31da9ad4a64058bf5b#egg=createsend-python
 -e git+git://github.com/internetarchive/warcprox.git@f79e74482339f8c06880b28e889be694b30d4575#egg=warcprox
+adblockparser==0.7
 amqp==1.4.9               # via kombu
 anyjson==0.3.3            # via kombu
 apipkg==1.4               # via execnet

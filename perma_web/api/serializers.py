@@ -14,7 +14,7 @@ class BaseSerializer(serializers.ModelSerializer):
     """ Base serializer from which all of our serializers inherit. """
 
     def update(self, instance, validated_data):
-        """ 
+        """
             When updating, requiring that our serializers provide a whitelist of fields that can be updated.
             This is a safety check that avoids implementation errors where users can update fields that should only be set on create.
         """
@@ -108,7 +108,7 @@ class CaptureJobSerializer(BaseSerializer):
     guid = serializers.PrimaryKeyRelatedField(source='link', read_only=True)
     class Meta:
         model = CaptureJob
-        fields = ('guid', 'status', 'attempt', 'step_count', 'step_description', 'capture_start_time', 'capture_end_time', 'queue_position')
+        fields = ('guid', 'status', 'attempt', 'step_count', 'step_description', 'capture_start_time', 'capture_end_time', 'queue_position', 'block_ads')
 
 
 ### CAPTURE ###

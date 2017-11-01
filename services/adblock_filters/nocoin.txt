@@ -1,0 +1,40 @@
+[Adblock Plus 2.0]
+!-------------------------------------------------------------------------------
+! Title: NoCoin Filter List
+! Expires: 2 days (update frequency)
+! Version: 4
+! Last modified: 20 Oct 2017
+! Homepage: https://github.com/hoshsadiq/adblock-nocoin-list/
+! Contribute: https://github.com/hoshsadiq/adblock-nocoin-list/issues
+! License: https://mit-license.org/
+! Description: This filter disables browser based miners such as coin-hive
+!-------------------------------------------------------------------------------
+||cnhv.co^$third-party
+||coin-hive.com^$third-party
+||coinhive.com^$third-party
+||gus.host/coins.js
+||jsecoin.com^$third-party
+||miner.pr0gramm.com^$third-party
+||miner.pr0gramm.com^$websocket
+||miner.pr0gramm.com/cryptonight-worker.js
+||minemytraffic.com^$third-party
+||ppoi.org^$third-party
+||projectpoi.com^$third-party
+||kisshentai.net/Content/js/c-hive.js
+||xbasfbno.info^$third-party
+||azvjudwr.info^$third-party
+||jroqvbvw.info^$third-party
+||jyhfuqoh.info^$third-party
+||kdowqlpt.info^$third-party
+||2giga.link/js/hive.js
+||crypto-loot.com^$third-party
+||coinerra.com^$third-party
+||coin-have.com^$third-party
+||minero.pw^$third-party
+||minero-proxy-01.now.sh^$third-party
+||minero-proxy-02.now.sh^$third-party
+||minero-proxy-03.now.sh^$third-party
+||kiwifarms.net/js/Jawsh/xmr/xmr.min.js
+||api.inwemo.com^$third-party
+! specific block
+.info^$script,third-party,domain=oload.info|oload.tv|openload.co|streamango.com|streamcherry.com

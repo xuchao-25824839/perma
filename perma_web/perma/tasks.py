@@ -41,6 +41,8 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 import internetarchive
 
+from adblockparser import AdblockRules
+
 from django.core.files.storage import default_storage
 from django.template.defaultfilters import truncatechars
 from django.conf import settings
@@ -52,7 +54,7 @@ from perma.models import WeekStats, MinuteStats, Registrar, LinkUser, Link, Orga
 from perma.email import sync_cm_list, send_admin_email, registrar_users_plus_stats
 from perma.utils import (run_task, url_in_allowed_ip_range,
     copy_file_data, open_warc_for_writing, write_warc_records_recorded_from_web,
-    write_resource_record_from_asset)
+    write_resource_record_from_asset, iter_files, files_in_directory)
 from perma import site_scripts
 
 import logging
@@ -159,6 +161,12 @@ ProxyingRecorder._update_payload_digest = _update_payload_digest
 _orig_threading_mixin = warcprox.warcprox.socketserver.ThreadingMixIn
 _orig_threading_mixin.daemon_threads = True
 
+
+
+# ADBLOCKING
+def page_blocking_rules():
+    return AdblockRules(iter_files(files_in_directory(settings.ADBLOCK_FILTERS_DIR)))
+rules = page_blocking_rules()
 
 # BROWSER HELPERS
 
@@ -859,6 +867,9 @@ def run_next_capture():
         capture_job.attempt += 1
         capture_job.save()
 
+        if capture_job.block_ads:
+            print("Ad blocker on")
+
         # BEGIN WARCPROX SETUP
 
         # Create a request handler class that tracks requests and responses
@@ -876,6 +887,11 @@ def run_next_capture():
 
                 # make sure we don't capture anything in a banned IP range
                 if not url_in_allowed_ip_range(self.url):
+                    return
+
+                # ad blocking
+                if capture_job.block_ads and rules.should_block(self.url):
+                    print("blocking {}".format(self.url))
                     return
 
                 # skip request if downloaded size exceeds MAX_ARCHIVE_FILE_SIZE.

@@ -385,7 +385,11 @@ class AuthenticatedLinkListView(BaseView):
                 ).save()
 
                 # create CaptureJob
-                CaptureJob(link=link, human=request.data.get('human', False)).save()
+                CaptureJob(
+                    link=link,
+                    human=request.data.get('human', False),
+                    block_ads=bool(request.data.get('block_ads', False))
+                ).save()
 
                 # kick off capture tasks -- no need for guid since it'll work through the queue
                 run_task(run_next_capture.s())

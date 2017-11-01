@@ -477,3 +477,14 @@ def write_resource_record_from_asset(data, url, content_type, out_file, extra_he
         headers.extend(extra_headers)
     record = warctools.WarcRecord(headers=headers, content=(content_type, data))
     record.write_to(out_file, gzip=True)
+
+
+def iter_files(files):
+    for file in files:
+        with open(file,'r') as f:
+            for line in f:
+                yield line
+
+
+def files_in_directory(directory):
+    return (os.path.join(directory, file) for file in os.listdir(directory))

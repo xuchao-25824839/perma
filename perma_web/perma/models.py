@@ -1258,6 +1258,7 @@ class CaptureJob(models.Model):
     step_description = models.CharField(max_length=255, blank=True, null=True)
     capture_start_time = models.DateTimeField(blank=True, null=True)
     capture_end_time = models.DateTimeField(blank=True, null=True)
+    block_ads = models.BooleanField(default=False)
 
     # settings to allow our tests to draw out race conditions
     TEST_PAUSE_TIME = 0

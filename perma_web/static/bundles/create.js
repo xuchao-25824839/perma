@@ -11148,7 +11148,8 @@ webpackJsonp([1],[
 	    var $this = $(this);
 	    var linker_data = {
 	      url: $this.find("input[name=url]").val(),
-	      human: true
+	      human: true,
+	      block_ads: $this.find("input[name=block_ads]").prop("checked")
 	    };
 	    var selectedFolder = FolderTreeModule.getSavedFolder();
 	

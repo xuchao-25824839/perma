@@ -56,7 +56,8 @@ def create_link(request):
         'links_remaining': links_remaining,
         'folder': folder,
         'suppress_reminder': suppress_reminder,
-        'max_size': max_size
+        'max_size': max_size,
+        'block_ads': settings.BLOCK_ADS_BY_DEFAULT
     })
 
 

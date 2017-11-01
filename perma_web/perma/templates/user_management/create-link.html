@@ -39,6 +39,12 @@
                   type="submit">
               Create Perma Link
           </button>
+          <div style="right: 153px; top: 110px; position: absolute;">
+            <label>
+              <input type="checkbox" name="block_ads" style="display: inline;" {% if block_ads %}checked{% endif %}>
+              Block Ads
+            </label>
+          </div>
 
           {% if request.user.has_limit %}
             <p id="links-remaining-message">You have <span class="links-remaining">{{links_remaining}}</span> remaining Perma Links on your free account this month. <a href="{% url 'docs_perma_link_creation' %}#preservation-limits">Learn more about accounts</a>.</p>

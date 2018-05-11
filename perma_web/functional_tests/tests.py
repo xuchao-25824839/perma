@@ -24,7 +24,7 @@ from perma.models import UncaughtError
 from perma.settings import SAUCE_USERNAME, SAUCE_ACCESS_KEY, USE_SAUCE, TIMEGATE_WARC_ROUTE, WARC_ROUTE
 from perma.tests.utils import failed_test_files_path
 
-
+import psutil
 # In this file we point a browser at a test server and navigate the site.
 # There are two separate choices to make:
 # (1) is the server remote, or a local Django test server we start for the occasion?
@@ -397,11 +397,16 @@ class FunctionalTest(BaseTestCase):
             # Verify that the folder used in the last capture was saved.
             print("before")
             print(time.time())
+            print(psutil.cpu_percent())
+            print(psutil.virtual_memory())
             self.driver.get(self.server_url + '/manage/create/')
             folder_from_storage = self.driver.execute_script("var ls = JSON.parse(localStorage.perma_selection); return ls[Object.keys(ls)[0]].folderIds[0]")
             self.assertEquals(folder_id, unicode(folder_from_storage))
             print("after")
             print(time.time())
+            print(time.time())
+            print(psutil.cpu_percent())
+            print(psutil.virtual_memory())
             current_url = self.driver.current_url
             self.assertEquals(self.server_url + '/manage/create/?folder=' + folder_id, current_url)
 

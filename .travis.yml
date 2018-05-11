@@ -39,6 +39,7 @@ install:
   # python reqs
   - pip install -r requirements.txt
   - pip install coveralls
+  - pip install psutil
 
   # node reqs
   - nvm install 6

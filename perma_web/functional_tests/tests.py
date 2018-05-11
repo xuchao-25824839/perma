@@ -123,16 +123,6 @@ def on_platforms(platforms):
             module[name] = type(name, (base_class,), d)
     return decorator
 
-
-def timing(f):
-    def wrap(*args):
-        time1 = time.time()
-        ret = f(*args)
-        time2 = time.time()
-        print("{} function took {} ms" .format(f.func_name, (time2-time1)*1000.0))
-        return ret
-    return wrap
-
 ## the actual tests!
 
 @on_platforms(browsers)
@@ -222,27 +212,21 @@ class FunctionalTest(BaseTestCase):
     def all(self):
 
         # helpers
-        @timing
         def click_link(link_text):
             get_element_with_text(link_text, 'a').click()
 
-        @timing
         def get_xpath(xpath):
             return self.driver.find_element_by_xpath(xpath)
 
-        @timing
         def get_css_selector(selector):
             return self.driver.find_element_by_css_selector(selector)
 
-        @timing
         def get_id(id):
             return self.driver.find_element_by_id(id)
 
-        @timing
         def get_element_with_text(text, element_type='*'):
             return get_xpath("//%s[contains(text(),'%s')]" % (element_type, text))
 
-        @timing
         def is_displayed(element, repeat=True):
             """ Check if element is displayed, by default retrying for 10 seconds if false. """
             if repeat:
@@ -255,11 +239,9 @@ class FunctionalTest(BaseTestCase):
                     return False
             return element.is_displayed()
 
-        @timing
         def assert_text_displayed(text, element_type='*'):
             self.assertTrue(is_displayed(get_element_with_text(text, element_type)))
 
-        @timing
         def type_to_element(element, text):
             element.click()
             element.send_keys(text)
@@ -300,7 +282,6 @@ class FunctionalTest(BaseTestCase):
                     raise Exception("%s timed out after %s seconds" % (func, timeout))
                 time.sleep(sleep_time)
 
-        @timing
         def fix_host(url):
             if REMOTE_SERVER_URL:
                 return url
@@ -523,22 +504,4 @@ class FunctionalTest(BaseTestCase):
             raise
 
     def test_one(self):
-        self.all()
-
-    def test_two(self):
-        self.all()
-
-    def test_three(self):
-        self.all()
-
-    def test_four(self):
-        self.all()
-
-    def test_five(self):
-        self.all()
-
-    def test_six(self):
-        self.all()
-
-    def test_seven(self):
         self.all()

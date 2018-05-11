@@ -493,6 +493,7 @@ class FunctionalTest(BaseTestCase):
             test_playback(capture_url, warc_url)
 
         except Exception:
+            import pdb; pdb.set_trace()
             # print unexpected JS errors
             for err in UncaughtError.objects.exclude(message__contains="doesNotExist"):
                 info("\n-----\nUnexpected javascript error:", err.current_url, err.message, err.stack)

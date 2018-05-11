@@ -493,6 +493,7 @@ class FunctionalTest(BaseTestCase):
             test_playback(capture_url, warc_url)
 
         except Exception:
+            print(self.driver.current_url)
             time.sleep(5)
             print(self.driver.current_url)
             time.sleep(5)

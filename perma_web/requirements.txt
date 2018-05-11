@@ -107,7 +107,7 @@ requests[security]==2.18.4
 s3transfer==0.1.10        # via boto3
 sauceclient==0.1.0
 schema==0.5.0             # via internetarchive
-selenium==2.47.3
+selenium==3.12
 six==1.10.0               # via cryptography, django-admin-smoke-tests, internetarchive, mock, pip-tools, pynacl, pyopenssl, pyscss, python-dateutil, pywb, requests-file, surt, warcio
 smhasher==0.150.1
 sorl-thumbnail==12.3

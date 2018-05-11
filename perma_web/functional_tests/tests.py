@@ -124,6 +124,15 @@ def on_platforms(platforms):
     return decorator
 
 
+def timing(f):
+    def wrap(*args):
+        time1 = time.time()
+        ret = f(*args)
+        time2 = time.time()
+        print '%s function took %0.3f ms' % (f.func_name, (time2-time1)*1000.0)
+        return ret
+    return wrap
+
 ## the actual tests!
 
 @on_platforms(browsers)
@@ -213,21 +222,27 @@ class FunctionalTest(BaseTestCase):
     def all(self):
 
         # helpers
+        @timing
         def click_link(link_text):
             get_element_with_text(link_text, 'a').click()
 
+        @timing
         def get_xpath(xpath):
             return self.driver.find_element_by_xpath(xpath)
 
+        @timing
         def get_css_selector(selector):
             return self.driver.find_element_by_css_selector(selector)
 
+        @timing
         def get_id(id):
             return self.driver.find_element_by_id(id)
 
+        @timing
         def get_element_with_text(text, element_type='*'):
             return get_xpath("//%s[contains(text(),'%s')]" % (element_type, text))
 
+        @timing
         def is_displayed(element, repeat=True):
             """ Check if element is displayed, by default retrying for 10 seconds if false. """
             if repeat:
@@ -240,9 +255,11 @@ class FunctionalTest(BaseTestCase):
                     return False
             return element.is_displayed()
 
+        @timing
         def assert_text_displayed(text, element_type='*'):
             self.assertTrue(is_displayed(get_element_with_text(text, element_type)))
 
+        @timing
         def type_to_element(element, text):
             element.click()
             element.send_keys(text)
@@ -263,6 +280,7 @@ class FunctionalTest(BaseTestCase):
         def infoLocal(*args):
             print(*args)
 
+        @timing
         def repeat_while_exception(func, exception=Exception, timeout=10, sleep_time=.1):
             end_time = time.time()+timeout
             while True:
@@ -273,6 +291,7 @@ class FunctionalTest(BaseTestCase):
                         raise
                     time.sleep(sleep_time)
 
+        @timing
         def repeat_while_false(func, timeout=10, sleep_time=.1):
             end_time = time.time()+timeout
             while True:
@@ -283,6 +302,7 @@ class FunctionalTest(BaseTestCase):
                     raise Exception("%s timed out after %s seconds" % (func, timeout))
                 time.sleep(sleep_time)
 
+        @timing
         def fix_host(url):
             if REMOTE_SERVER_URL:
                 return url
@@ -396,9 +416,13 @@ class FunctionalTest(BaseTestCase):
             # repeat_while_exception(get_xpath("//span[contains(@class,'notes-save-status') and contains(text(),'saved.')]"), NoSuchElementException)
 
             # Verify that the folder used in the last capture was saved.
+            print("before")
+            print(time.time())
             self.driver.get(self.server_url + '/manage/create/')
             folder_from_storage = self.driver.execute_script("var ls = JSON.parse(localStorage.perma_selection); return ls[Object.keys(ls)[0]].folderIds[0]")
             self.assertEquals(folder_id, unicode(folder_from_storage))
+            print("after")
+            print(time.time())
             current_url = self.driver.current_url
             self.assertEquals(self.server_url + '/manage/create/?folder=' + folder_id, current_url)
 

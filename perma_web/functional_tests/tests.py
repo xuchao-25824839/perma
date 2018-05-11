@@ -210,7 +210,7 @@ class FunctionalTest(BaseTestCase):
         finally:
             self.quitDriver()
 
-    def test_all(self):
+    def all(self):
 
         # helpers
         def click_link(link_text):
@@ -500,3 +500,24 @@ class FunctionalTest(BaseTestCase):
                 info("Screenshot failed: %s" % e2)
 
             raise
+
+    def test_one(self):
+        self.all()
+
+    def test_two(self):
+        self.all()
+
+    def test_three(self):
+        self.all()
+
+    def test_four(self):
+        self.all()
+
+    def test_five(self):
+        self.all()
+
+    def test_six(self):
+        self.all()
+
+    def test_seven(self):
+        self.all()

@@ -61,7 +61,9 @@ def run_ssl(port="0.0.0.0:8000"):
     """
     local("python manage.py runsslserver %s" % port)
 
-_default_tests = "perma api functional_tests lockss"
+# _default_tests = "perma api functional_tests lockss"
+_default_tests = "functional_tests"
+
 
 @task
 def test(apps=_default_tests, pytest=True):

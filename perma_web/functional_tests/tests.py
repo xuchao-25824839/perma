@@ -9,7 +9,7 @@ import datetime
 import sys
 from urlparse import urlparse
 import requests
-from pyvirtualdisplay import Display
+# from pyvirtualdisplay import Display
 from selenium import webdriver
 from selenium.common.exceptions import ElementNotVisibleException, NoSuchElementException
 import time

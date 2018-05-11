@@ -280,7 +280,6 @@ class FunctionalTest(BaseTestCase):
         def infoLocal(*args):
             print(*args)
 
-        @timing
         def repeat_while_exception(func, exception=Exception, timeout=10, sleep_time=.1):
             end_time = time.time()+timeout
             while True:
@@ -291,7 +290,6 @@ class FunctionalTest(BaseTestCase):
                         raise
                     time.sleep(sleep_time)
 
-        @timing
         def repeat_while_false(func, timeout=10, sleep_time=.1):
             end_time = time.time()+timeout
             while True:

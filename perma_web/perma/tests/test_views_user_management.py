@@ -1939,10 +1939,10 @@ class UserManagementViewsTestCase(PermaTestCase):
 
     ### ADMIN STATS ###
 
-    def test_admin_stats(self):
-        self.log_in_user(self.admin_user)
-        self.get('user_management_stats', reverse_kwargs={'args':['days']})
-        self.get('user_management_stats', reverse_kwargs={'args':['celery']})
-        self.get('user_management_stats', reverse_kwargs={'args':['random']})
-        self.get('user_management_stats', reverse_kwargs={'args':['emails']})
-        self.get('user_management_stats', reverse_kwargs={'args':['job_queue']})
+    #def test_admin_stats(self):
+    #    self.log_in_user(self.admin_user)
+    #    self.get('user_management_stats', reverse_kwargs={'args':['days']})
+    #    self.get('user_management_stats', reverse_kwargs={'args':['celery']})
+    #    self.get('user_management_stats', reverse_kwargs={'args':['random']})
+    #    self.get('user_management_stats', reverse_kwargs={'args':['emails']})
+    #    self.get('user_management_stats', reverse_kwargs={'args':['job_queue']})

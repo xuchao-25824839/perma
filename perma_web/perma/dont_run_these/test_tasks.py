@@ -8,7 +8,7 @@ from django.test import TestCase, override_settings
 from perma.tasks import update_stats, upload_all_to_internet_archive, upload_to_internet_archive, delete_from_internet_archive, cm_sync, send_js_errors
 from perma.models import Link, UncaughtError
 
-@override_settings(CELERY_ALWAYS_EAGER=True, UPLOAD_TO_INTERNET_ARCHIVE=True)
+@override_settings(CELERY_TASK_ALWAYS_EAGER=True, UPLOAD_TO_INTERNET_ARCHIVE=True)
 class TaskTestCase(TestCase):
 
     def testUpdateStats(self):

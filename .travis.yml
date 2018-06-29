@@ -43,7 +43,7 @@ install:
 
 before_script:
   # linting
-  - flake8 .
+  #- flake8 .
 
   - mysql -e 'CREATE DATABASE perma;'
   - mysql -e 'CREATE DATABASE perma_cdxline;'

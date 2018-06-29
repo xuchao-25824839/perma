@@ -61,7 +61,8 @@ def run_ssl(port="0.0.0.0:8000"):
     """
     local("pipenv run python manage.py runsslserver %s" % port)
 
-_default_tests = "perma api functional_tests lockss"
+#_default_tests = "perma api functional_tests lockss"
+_default_tests = "perma"
 
 @task
 def test(apps=_default_tests, pytest=True):
@@ -95,7 +96,7 @@ def test_python(apps=_default_tests, pytest=True):
             if pytest == 'False':
                 local("coverage run manage.py test --settings perma.settings.deployments.settings_testing %s" % (apps))
             else:
-                local("pytest %s --ds=perma.settings.deployments.settings_testing --cov --cov-report= " % (apps))
+                local("pytest %s --ds=perma.settings.deployments.settings_testing --verbose --cov --cov-report= " % (apps))
     finally:
         # clean up after ourselves
         shutil.rmtree(tmp)

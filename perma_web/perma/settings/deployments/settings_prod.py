@@ -11,7 +11,7 @@ DEBUG = False
 MEDIA_ROOT = '/perma/assets/generated'
 
 # Schedule celerybeat jobs.
-# These will be added to CELERYBEAT_SCHEDULE in settings.utils.post_processing
+# These will be added to CELERY_BEAT_SCHEDULE in settings.utils.post_processing
 CELERYBEAT_JOB_NAMES = [
     'update-stats',
     'send-links-to-internet-archives',

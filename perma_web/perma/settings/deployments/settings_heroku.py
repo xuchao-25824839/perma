@@ -45,13 +45,13 @@ DEFAULT_FILE_STORAGE = 'perma.storage_backends.S3MediaStorage'
 
 # message passing
 # settings via https://www.cloudamqp.com/docs/celery.html
-BROKER_POOL_LIMIT=1
-BROKER_URL = os.environ.get('CLOUDAMQP_URL')
-BROKER_CONNECTION_TIMEOUT = 30
-BROKER_HEARTBEAT = 30
-CELERY_SEND_EVENTS = False  # on the free CloudAMQP plan, celery events rapidly eat up our monthly message quota
+CELERY_BROKER_POOL_LIMIT=1
+CELERY_BROKER_URL = os.environ.get('CLOUDAMQP_URL')
+CELERY_BROKER_CONNECTION_TIMEOUT = 30
+CELERY_BROKER_HEARTBEAT = 30
+CELERY_WORKER_SEND_TASK_EVENTS = False  # on the free CloudAMQP plan, celery events rapidly eat up our monthly message quota
 CELERY_RESULT_BACKEND = os.environ.get('REDISCLOUD_URL')
-CELERYD_HIJACK_ROOT_LOGGER = False
+CELERY_WORKER_HIJACK_ROOT_LOGGER = False
 
 # logging
 LOGGING['handlers']['default'] = {
